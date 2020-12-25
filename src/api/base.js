@@ -1,36 +1,37 @@
 export default (fetch, env) => ({
-  async get(path) {
+  async get (path) {
+    console.log(env)
     const response = await fetch(
-      env.HUE_HOST + "/api/" + env.HUE_USER_TOKEN + path,
+      env.host + '/api/' + env.userToken + path,
       {
         headers: {
-          Accept: "application/json"
+          Accept: 'application/json'
         }
       }
-    );
-    const data = await response.json();
+    )
+    const data = await response.json()
 
     return {
       data,
       response
-    };
+    }
   },
-  async post(path) {
+  async post (path, body) {
     const response = await fetch(
-      env.HUE_HOST + "/api/" + env.HUE_USER_TOKEN + path,
+      env.host + '/api/' + env.userToken + path,
       {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json"
+          'Content-Type': 'application/json'
         },
         body: JSON.encode(body)
       }
-    );
-    const data = await response.json();
+    )
+    const data = await response.json()
 
     return {
       data,
       response
-    };
+    }
   }
-});
+})

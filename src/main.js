@@ -4,12 +4,16 @@ import './registerServiceWorker'
 import router from './router'
 import store from './store'
 import './assets/tailwind.css'
-import hue from './api/hue'
-import base from './api/base'
+import Hue from './plugins/Hue'
 
 Vue.config.productionTip = false
 
-window.$hue = new hue(new base(fetch, process.env))
+Vue.use(Hue, {
+  env: {
+    userToken: process.env.VUE_APP_HUE_USER_TOKEN,
+    host: process.env.VUE_APP_HUE_HOST
+  }
+})
 
 new Vue({
   router,
