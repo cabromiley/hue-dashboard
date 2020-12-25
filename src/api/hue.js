@@ -8,9 +8,19 @@ export default api => ({
   },
   lights: {
     setState (id, state) {
-      return api.put(`/lights/${id}/state`, {
-        on: state
-      })
+      return api.put(`/lights/${id}/state`, state)
+    },
+    state: {
+      setOn (id, state) {
+        return api.put(`/lights/${id}/state`, {
+          on: state
+        })
+      },
+      setBrightness (id, bri) {
+        return api.put(`/lights/${id}/state`, {
+          bri
+        })
+      }
     }
   },
   discover () {
