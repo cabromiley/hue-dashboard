@@ -6,7 +6,13 @@ export default api => ({
       })
     }
   },
-  lights: {},
+  lights: {
+    setState (id, state) {
+      return api.put(`/lights/${id}/state`, {
+        on: state
+      })
+    }
+  },
   discover () {
     return api.get('')
   }

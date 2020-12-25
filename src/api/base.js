@@ -1,6 +1,5 @@
 export default (fetch, env) => ({
   async get (path) {
-    console.log(env)
     const response = await fetch(
       env.host + '/api/' + env.userToken + path,
       {
@@ -24,7 +23,25 @@ export default (fetch, env) => ({
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.encode(body)
+        body: JSON.stringify(body)
+      }
+    )
+    const data = await response.json()
+
+    return {
+      data,
+      response
+    }
+  },
+  async put (path, body) {
+    const response = await fetch(
+      env.host + '/api/' + env.userToken + path,
+      {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body)
       }
     )
     const data = await response.json()
