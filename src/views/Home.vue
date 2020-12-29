@@ -1,6 +1,11 @@
 <template>
   <div class="home">
-    <Light v-for="(light, $key) in hue.data.lights" :key="light.modelid" :light="light" :id="$key" />
+    <div class="container mx-auto">
+      <h2 class="text-gray-500 text-xs font-medium uppercase tracking-wide">Lights</h2>
+      <ul class="mt-3 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <Light v-for="(light, $key) in hue.data.lights" :key="light.modelid" :light="light" :id="$key" />
+      </ul>
+    </div>
   </div>
 </template>
 
