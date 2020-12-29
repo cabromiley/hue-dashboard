@@ -39,4 +39,24 @@ describe('Home.vue', () => {
     expect(wrapper.html()).toContain('id="1"')
     expect(wrapper.html()).toContain('light-stub')
   })
+
+  it('should show error message if unable to find to find hue lights', async () => {
+    const hue = Hue({
+      get () {
+        return new Promise((resolve, reject) => {
+          return reject(new Error('Oops unable to find hub'))
+        })
+      }
+    })
+
+    const wrapper = shallowMount(Home, {
+      mocks: {
+        $hue: hue
+      }
+    })
+
+    await wrapper.vm.$nextTick()
+
+    expect(wrapper.html()).toContain('Oops unable to find hub')
+  })
 })
