@@ -23,8 +23,19 @@ Vue.use(Api, {
 
 AuthMiddleware(router, store)
 
-new Vue({
+const app = new Vue({
   router,
   store,
   render: h => h(App)
 }).$mount('#app')
+
+checkIfLoggedIn()
+
+async function checkIfLoggedIn () {
+  try {
+    const response = await app.$api.user()
+    app.$store.dispatch('UPDATE_USER', response.data)
+    app.$store.dispatch('SET_LOGGED_IN', true)
+    app.$router.push({ name: 'Home' })
+  } catch (e) {}
+}

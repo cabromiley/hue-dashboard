@@ -142,7 +142,8 @@ export default {
     onProfileClick () {
       this.isProfileOpen = !this.isProfileOpen
     },
-    onLogout () {
+    async onLogout () {
+      await this.$api.logout()
       this.$store.dispatch('LOGOUT')
       this.$router.push({ name: 'Login' })
       this.isProfileOpen = false
@@ -155,3 +156,4 @@ export default {
   }
 }
 </script>
+``

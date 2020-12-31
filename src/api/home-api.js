@@ -9,6 +9,12 @@ export default axios => ({
       remember
     })
   },
+  logout () {
+    return axios.post('/api/logout')
+  },
+  user () {
+    return axios.get('/api/user')
+  },
   lights: {
     all () {
       return axios.get('/api/lights')
