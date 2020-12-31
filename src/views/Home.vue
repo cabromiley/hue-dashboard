@@ -2,7 +2,7 @@
   <div class="home">
     <div class="container mx-auto" v-if="!hasError">
       <Panel title="Lights">
-        <Light v-for="(light, $key) in hue.data.lights" :key="light.modelid" :light="light" :id="$key" />
+        <Light v-for="(light, $key) in lights" :key="light.modelid" :light="light" :id="$key" />
       </Panel>
     </div>
     <div v-else>
@@ -24,11 +24,7 @@ export default {
   },
   data () {
     return {
-      hue: {
-        data: {
-          lights: []
-        }
-      },
+      lights: [],
       error: {},
       hasError: false
     }
@@ -36,7 +32,8 @@ export default {
   methods: {
     async discover () {
       try {
-        this.hue = await this.$hue.discover()
+        const lights = await this.$api.lights.all()
+        this.lights = lights.data
       } catch (e) {
         this.error = e
         this.hasError = true

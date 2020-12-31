@@ -1,19 +1,17 @@
 import { shallowMount } from '@vue/test-utils'
 import Home from '@/views/Home.vue'
-import Hue from '@/api/hue'
+import homeApi from '../../src/api/home-api'
 
 describe('Home.vue', () => {
   let mocks = {}
 
   beforeEach(() => {
     mocks = {
-      $hue: Hue({
+      $api: homeApi({
         get () {
           return new Promise(resolve => {
             return resolve({
-              data: {
-                lights: [{ name: 'first light', modelid: '123' }, { name: 'second light', modelid: '124w' }]
-              }
+              data: { 1: { name: 'first light', modelid: '123' }, 2: { name: 'second light', modelid: '124w' } }
             })
           })
         }
@@ -21,13 +19,13 @@ describe('Home.vue', () => {
     }
   })
 
-  it('sets hue.data.lights equal to the api response lights array', async () => {
+  it('sets lights equal to the api response lights array', async () => {
     const wrapper = shallowMount(Home, { mocks })
 
     await wrapper.vm.$nextTick()
 
-    expect(wrapper.vm.hue.data.lights[0].name).toBe('first light')
-    expect(wrapper.vm.hue.data.lights[1].name).toBe('second light')
+    expect(wrapper.vm.lights['1'].name).toBe('first light')
+    expect(wrapper.vm.lights['2'].name).toBe('second light')
   })
 
   it('should print a light component for each light', async () => {
@@ -35,13 +33,13 @@ describe('Home.vue', () => {
 
     await wrapper.vm.$nextTick()
 
-    expect(wrapper.html()).toContain('id="0"')
     expect(wrapper.html()).toContain('id="1"')
+    expect(wrapper.html()).toContain('id="2"')
     expect(wrapper.html()).toContain('light-stub')
   })
 
   it('should show error message if unable to find to find hue lights', async () => {
-    const hue = Hue({
+    const api = homeApi({
       get () {
         return new Promise((resolve, reject) => {
           return reject(new Error('Oops unable to find hub'))
@@ -51,7 +49,7 @@ describe('Home.vue', () => {
 
     const wrapper = shallowMount(Home, {
       mocks: {
-        $hue: hue
+        $api: api
       }
     })
 
