@@ -9,11 +9,8 @@ describe('Light.vue', () => {
   beforeEach(() => {
     mocks = {
       $hue: Hue({
-        get () {
-        },
-        put () {
-
-        }
+        get () {},
+        put () {}
       })
     }
 

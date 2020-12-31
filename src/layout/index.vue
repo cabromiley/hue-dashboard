@@ -1,6 +1,7 @@
 <template>
-  <div id="app">
-    <nav id="nav" class="bg-indigo-600">
+    <!-- This example requires Tailwind CSS v2.0+ -->
+    <div>
+    <nav class="bg-indigo-600">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-16">
             <div class="flex items-center">
@@ -9,13 +10,21 @@
             </div>
             <div class="hidden md:block">
                 <div class="ml-10 flex items-baseline space-x-4">
-                  <!-- Current: "bg-indigo-700 text-white", Default: "" -->
-                  <router-link to="/" class="text-white hover:bg-indigo-500 hover:bg-opacity-75 px-3 py-2 rounded-md text-sm font-medium" exact-active-class="bg-indigo-700 text-white" >Home</router-link>
+                <!-- Current: "bg-indigo-700 text-white", Default: "text-white hover:bg-indigo-500 hover:bg-opacity-75" -->
+                <a href="#" class="bg-indigo-700 text-white px-3 py-2 rounded-md text-sm font-medium">Dashboard</a>
+
+                <a href="#" class="text-white hover:bg-indigo-500 hover:bg-opacity-75 px-3 py-2 rounded-md text-sm font-medium">Team</a>
+
+                <a href="#" class="text-white hover:bg-indigo-500 hover:bg-opacity-75 px-3 py-2 rounded-md text-sm font-medium">Projects</a>
+
+                <a href="#" class="text-white hover:bg-indigo-500 hover:bg-opacity-75 px-3 py-2 rounded-md text-sm font-medium">Calendar</a>
+
+                <a href="#" class="text-white hover:bg-indigo-500 hover:bg-opacity-75 px-3 py-2 rounded-md text-sm font-medium">Reports</a>
                 </div>
             </div>
             </div>
             <div class="hidden md:block">
-            <div v-if="isAuthenticated" class="ml-4 flex items-center md:ml-6">
+            <div class="ml-4 flex items-center md:ml-6">
                 <button class="p-1 bg-indigo-600 rounded-full text-indigo-200 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-indigo-600 focus:ring-white">
                 <span class="sr-only">View notifications</span>
                 <!-- Heroicon name: bell -->
@@ -27,9 +36,9 @@
                 <!-- Profile dropdown -->
                 <div class="ml-3 relative">
                 <div>
-                    <button @click="onProfileClick" class="max-w-xs bg-indigo-600 rounded-full flex items-center text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-indigo-600 focus:ring-white" id="user-menu" aria-haspopup="true">
-                      <span class="sr-only">Open user menu</span>
-                      <img class="h-8 w-8 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
+                    <button class="max-w-xs bg-indigo-600 rounded-full flex items-center text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-indigo-600 focus:ring-white" id="user-menu" aria-haspopup="true">
+                    <span class="sr-only">Open user menu</span>
+                    <img class="h-8 w-8 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
                     </button>
                 </div>
                 <!--
@@ -42,8 +51,12 @@
                     From: "transform opacity-100 scale-100"
                     To: "transform opacity-0 scale-95"
                 -->
-                <div v-if="isProfileOpen" class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5" role="menu" aria-orientation="vertical" aria-labelledby="user-menu">
-                    <button @click="onLogout" class="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Logout</button>
+                <div class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5" role="menu" aria-orientation="vertical" aria-labelledby="user-menu">
+                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Your Profile</a>
+
+                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Your Profile</a>
+
+                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Your Profile</a>
                 </div>
                 </div>
             </div>
@@ -123,35 +136,10 @@
         <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
         <!-- Replace with your content -->
         <div class="px-4 py-4 sm:px-0">
-            <router-view />
+            <slot />
         </div>
         <!-- /End replace -->
         </div>
     </main>
     </div>
 </template>
-
-<script>
-export default {
-  data () {
-    return {
-      isProfileOpen: false
-    }
-  },
-  methods: {
-    onProfileClick () {
-      this.isProfileOpen = !this.isProfileOpen
-    },
-    onLogout () {
-      this.$store.dispatch('LOGOUT')
-      this.$router.push({ name: 'Login' })
-      this.isProfileOpen = false
-    }
-  },
-  computed: {
-    isAuthenticated () {
-      return this.$store.getters.isAuthenticated
-    }
-  }
-}
-</script>

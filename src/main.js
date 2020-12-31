@@ -5,6 +5,8 @@ import router from './router'
 import store from './store'
 import './assets/tailwind.css'
 import Hue from './plugins/Hue'
+import Api from './plugins/Api'
+import AuthMiddleware from './router/middleware/auth'
 
 Vue.config.productionTip = false
 
@@ -14,6 +16,12 @@ Vue.use(Hue, {
     host: process.env.VUE_APP_HUE_HOST
   }
 })
+
+Vue.use(Api, {
+  host: process.env.VUE_APP_API_BASE
+})
+
+AuthMiddleware(router, store)
 
 new Vue({
   router,
