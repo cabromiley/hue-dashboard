@@ -1,6 +1,5 @@
 import { shallowMount } from '@vue/test-utils'
 import Light from '@/components/Light.vue'
-import Hue from '@/api/hue'
 import homeApi from '../../../src/api/home-api'
 
 describe('Light.vue', () => {

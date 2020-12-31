@@ -22,10 +22,10 @@
             </div>
             <div class="ml-3 w-0 flex-1 pt-0.5">
             <p class="text-sm font-medium text-gray-900">
-                Successfully saved!
+                {{ notification.header }}
             </p>
             <p class="mt-1 text-sm text-gray-500">
-                Anyone with a link can now view this file.
+                {{ notification.description }}
             </p>
             </div>
             <div class="ml-4 flex-shrink-0 flex">
@@ -42,3 +42,11 @@
     </div>
     </div>
 </template>
+
+<script>
+export default {
+  props: {
+    item: { type: Object, required: true }
+  }
+}
+</script>

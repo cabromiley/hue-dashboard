@@ -131,14 +131,16 @@
         <!-- /End replace -->
         </div>
     </main>
+    <notification-mananger />
     </div>
 </template>
 
 <script>
 import Loader from './components/Loader.vue'
+import NotificationMananger from './components/NotificationMananger.vue'
 export default {
   name: 'App',
-  components: { Loader },
+  components: { Loader, NotificationMananger },
   data () {
     return {
       isProfileOpen: false,

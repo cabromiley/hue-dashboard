@@ -3,6 +3,8 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
+let nofitificationID = 0
+
 export default new Vuex.Store({
   state: {
     isLoggedIn: false,
@@ -22,6 +24,15 @@ export default new Vuex.Store({
     },
     setAuthCheckedTrue (state) {
       state.isAuthChecked = true
+    },
+    appendNotification (state, notification) {
+      nofitificationID++
+      notification.uuid = nofitificationID
+
+      state.notifications = { ...state.notifications, notification }
+    },
+    removeNotification (state, uuid) {
+      state.notifications = { ...state.notifications.filter(n => n.uuid !== uuid) }
     }
   },
   actions: {
@@ -37,6 +48,12 @@ export default new Vuex.Store({
     },
     AUTH_CHECKED ({ commit }) {
       commit('setAuthCheckedTrue')
+    },
+    ADD_NOTIFICATION ({ commit }, notification) {
+      commit('appendNotification', notification)
+    },
+    REMOVE_NOTIFICATION ({ commit }, uuid) {
+      commit('removeNotification', uuid)
     }
   },
   getters: {
@@ -46,7 +63,5 @@ export default new Vuex.Store({
     isAuthChecked (state) {
       return state.isAuthChecked
     }
-  },
-  modules: {
   }
 })

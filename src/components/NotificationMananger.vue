@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Notification v-for="(notification, $key) in notifications" :key="$key" />
+        <Notification v-for="(notification, $key) in notifications" :key="$key" :item="notification" />
     </div>
 </template>
 
