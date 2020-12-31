@@ -16,14 +16,6 @@
             </div>
             <div class="hidden md:block">
             <div v-if="isAuthenticated" class="ml-4 flex items-center md:ml-6">
-                <button class="p-1 bg-indigo-600 rounded-full text-indigo-200 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-indigo-600 focus:ring-white">
-                <span class="sr-only">View notifications</span>
-                <!-- Heroicon name: bell -->
-                <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-                </svg>
-                </button>
-
                 <!-- Profile dropdown -->
                 <div class="ml-3 relative">
                 <div>
@@ -50,7 +42,7 @@
             </div>
             <div class="-mr-2 flex md:hidden">
             <!-- Mobile menu button -->
-            <button class="bg-indigo-600 inline-flex items-center justify-center p-2 rounded-md text-indigo-200 hover:text-white hover:bg-indigo-500 hover:bg-opacity-75 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-indigo-600 focus:ring-white">
+            <button  @click="onProfileClick" class="bg-indigo-600 inline-flex items-center justify-center p-2 rounded-md text-indigo-200 hover:text-white hover:bg-indigo-500 hover:bg-opacity-75 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-indigo-600 focus:ring-white">
                 <span class="sr-only">Open main menu</span>
                 <!--
                 Heroicon name: menu
@@ -73,23 +65,10 @@
         </div>
         </div>
 
-        <!--
-        Mobile menu, toggle classes based on menu state.
-
-        Open: "block", closed: "hidden"
-        -->
-        <div class="hidden md:hidden">
+        <div :class="[{hidden : !isProfileOpen, block: isProfileOpen}, 'md:hidden']">
         <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
             <!-- Current: "bg-indigo-700 text-white", Default: "text-white hover:bg-indigo-500 hover:bg-opacity-75" -->
-            <a href="#" class="bg-indigo-700 text-white block px-3 py-2 rounded-md text-base font-medium">Dashboard</a>
-
-            <a href="#" class="text-white hover:bg-indigo-500 hover:bg-opacity-75 block px-3 py-2 rounded-md text-base font-medium">Team</a>
-
-            <a href="#" class="text-white hover:bg-indigo-500 hover:bg-opacity-75 block px-3 py-2 rounded-md text-base font-medium">Projects</a>
-
-            <a href="#" class="text-white hover:bg-indigo-500 hover:bg-opacity-75 block px-3 py-2 rounded-md text-base font-medium">Calendar</a>
-
-            <a href="#" class="text-white hover:bg-indigo-500 hover:bg-opacity-75 block px-3 py-2 rounded-md text-base font-medium">Reports</a>
+            <router-link to="/" class="bg-indigo-700 text-white block px-3 py-2 rounded-md text-base font-medium" exact-active-class="bg-indigo-700 text-white" >Home</router-link>
         </div>
         <div class="pt-4 pb-3 border-t border-indigo-700">
             <div class="flex items-center px-5">
@@ -97,16 +76,9 @@
                 <img class="h-10 w-10 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
             </div>
             <div class="ml-3">
-                <div class="text-base font-medium text-white">Tom Cook</div>
-                <div class="text-sm font-medium text-indigo-300">tom@example.com</div>
+                <div class="text-base font-medium text-white">{{ user.name }}</div>
+                <div class="text-sm font-medium text-indigo-300">{{ user.email }}</div>
             </div>
-            <button class="ml-auto bg-indigo-600 flex-shrink-0 p-1 rounded-full text-indigo-200 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-indigo-600 focus:ring-white">
-                <span class="sr-only">View notifications</span>
-                <!-- Heroicon name: bell -->
-                <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-                </svg>
-            </button>
             </div>
             <div class="mt-3 px-2 space-y-1">
             <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-indigo-500 hover:bg-opacity-75">Your Profile</a>
@@ -180,6 +152,9 @@ export default {
     },
     isAuthChecked () {
       return this.$store.getters.isAuthChecked
+    },
+    user () {
+      return this.$store.state.user || {}
     }
   },
   created () {
