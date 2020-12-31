@@ -6,6 +6,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     isLoggedIn: false,
+    isAuthChecked: false,
     user: {},
     notifications: []
   },
@@ -18,6 +19,9 @@ export default new Vuex.Store({
     },
     setLoginFailed (state, value) {
       state.hasLoginFailed = value
+    },
+    setAuthCheckedTrue (state) {
+      state.isAuthChecked = true
     }
   },
   actions: {
@@ -30,11 +34,17 @@ export default new Vuex.Store({
     LOGOUT ({ commit }) {
       commit('setIsLoggedIn', false)
       commit('setUser', {})
+    },
+    AUTH_CHECKED ({ commit }) {
+      commit('setAuthCheckedTrue')
     }
   },
   getters: {
     isAuthenticated (state) {
       return state.isLoggedIn
+    },
+    isAuthChecked (state) {
+      return state.isAuthChecked
     }
   },
   modules: {

@@ -122,8 +122,11 @@
     <main>
         <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
         <!-- Replace with your content -->
-        <div class="px-4 py-4 sm:px-0">
+        <div v-if="isAuthChecked" class="px-4 py-4 sm:px-0">
             <router-view />
+        </div>
+        <div class="container" v-else>
+          <Loader class="mx-auto" />
         </div>
         <!-- /End replace -->
         </div>
@@ -132,10 +135,14 @@
 </template>
 
 <script>
+import Loader from './components/Loader.vue'
 export default {
+  name: 'App',
+  components: { Loader },
   data () {
     return {
-      isProfileOpen: false
+      isProfileOpen: false,
+      loginChecked: false
     }
   },
   methods: {
@@ -147,12 +154,34 @@ export default {
       this.$store.dispatch('LOGOUT')
       this.$router.push({ name: 'Login' })
       this.isProfileOpen = false
+    },
+    async checkLoggedIn () {
+      try {
+        const response = await this.$api.user()
+        this.$store.dispatch('UPDATE_USER', response.data)
+        this.$store.dispatch('SET_LOGGED_IN', true)
+        if (this.$route.name !== 'Home') {
+          this.$router.push({ name: 'Home' })
+        }
+      } catch (e) {
+        if (this.$route.name !== 'Login') {
+          this.$router.push({ name: 'Login' })
+        }
+      } finally {
+        this.$store.dispatch('AUTH_CHECKED')
+      }
     }
   },
   computed: {
     isAuthenticated () {
       return this.$store.getters.isAuthenticated
+    },
+    isAuthChecked () {
+      return this.$store.getters.isAuthChecked
     }
+  },
+  created () {
+    this.checkLoggedIn()
   }
 }
 </script>
