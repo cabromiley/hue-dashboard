@@ -26,7 +26,7 @@ export default {
   },
   methods: {
     async onToggle () {
-      await this.$hue.lights.state.setOn(this.id, !this.light.state.on)
+      await this.$api.lights.turnOnOff(this.id, !this.light.state.on)
       this.light.state.on = !this.light.state.on
     }
   },

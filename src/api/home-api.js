@@ -12,6 +12,17 @@ export default axios => ({
   lights: {
     all () {
       return axios.get('/api/lights')
+    },
+    find (id) {
+      return axios.get(`/api/lights/${id}`)
+    },
+    update (id, state) {
+      return axios.put(`/api/light/${id}`, state)
+    },
+    turnOnOff (id, isOn) {
+      return axios.put(`/api/light/${id}`, {
+        on: isOn
+      })
     }
   }
 })

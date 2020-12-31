@@ -1,6 +1,7 @@
 import { shallowMount } from '@vue/test-utils'
 import Light from '@/components/Light.vue'
 import Hue from '@/api/hue'
+import homeApi from '../../../src/api/home-api'
 
 describe('Light.vue', () => {
   let mocks = {}
@@ -8,7 +9,7 @@ describe('Light.vue', () => {
 
   beforeEach(() => {
     mocks = {
-      $hue: Hue({
+      $api: homeApi({
         get () {},
         put () {}
       })
@@ -87,7 +88,7 @@ describe('Light.vue', () => {
   })
 
   it('should call toggle api when onToggle is called', async () => {
-    const spy = jest.spyOn(mocks.$hue.lights.state, 'setOn')
+    const spy = jest.spyOn(mocks.$api.lights, 'turnOnOff')
     const wrapper = shallowMount(Light, {
       mocks,
       propsData: {
